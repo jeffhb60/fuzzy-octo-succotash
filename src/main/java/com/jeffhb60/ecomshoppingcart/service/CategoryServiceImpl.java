@@ -40,7 +40,14 @@ public class CategoryServiceImpl implements CategoryService{
         Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
 
         if (categoryPage.isEmpty()) {
-            throw new APIException("There are no categories available in the database!");
+            return new CategoryResponse(
+                    List.of(),
+                    pageNumber,
+                    pageSize,
+                    0L,
+                    0,
+                    true
+            );
         }
 
         List<CategoryDTO> categoryDTOS = categoryPage.getContent().stream()
@@ -48,6 +55,11 @@ public class CategoryServiceImpl implements CategoryService{
                 .toList();
         CategoryResponse categoryResponse = new CategoryResponse();
         categoryResponse.setContent(categoryDTOS);
+        categoryResponse.setPageNumber(pageNumber);
+        categoryResponse.setPageSize(pageSize);
+        categoryResponse.setTotalPages(categoryPage.getTotalPages());
+        categoryResponse.setTotalElements(categoryPage.getTotalElements());
+        categoryResponse.setLastPage(categoryPage.isLast());
         return categoryResponse;
     }
 

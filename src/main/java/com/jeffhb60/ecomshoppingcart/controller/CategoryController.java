@@ -14,6 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jeffhb60.ecomshoppingcart.config.AppConstants.PAGE_NUMBER;
+import static com.jeffhb60.ecomshoppingcart.config.AppConstants.PAGE_SIZE;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/")
@@ -25,12 +28,12 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> getAllCategories(
 
             @RequestParam(name = "pageNumber",
-            defaultValue = "0",
+            defaultValue = PAGE_NUMBER,
             required = false)
             Integer pageNumber,
 
             @RequestParam(name = "pageSize",
-                    defaultValue = "10",
+                    defaultValue = PAGE_SIZE,
                     required = false)
             Integer pageSize)
     {

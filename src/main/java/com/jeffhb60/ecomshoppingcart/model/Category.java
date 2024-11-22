@@ -18,13 +18,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Category {
 
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long categoryId;
 
     @NotBlank
-    @Size(min = 5, message = "Category must contain at least 5 characters")
+    @Size(min = 1, message = "Category must contain at least 1 characters")
     @Column(name = "name")
     private String categoryName;
 }
