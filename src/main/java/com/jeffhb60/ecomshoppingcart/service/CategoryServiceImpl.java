@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService{
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Resource not found!"));
 
         categories.remove(category);
-        return "Category with categoryId: " + categoryId + "deleted successfully";
+        return "Category with categoryId: " + categoryId + " deleted successfully";
     }
 
     @Override
