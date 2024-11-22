@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class CategoryServiceImpl implements CategoryService{
 //    private final List<Category> categories = new ArrayList<>();
-    private Long nextId = 1L;
+//    private Long nextId = 1L;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public void createCategory(Category category) {
-        category.setCategoryId(nextId++);
+//        category.setCategoryId(nextId++);
 //        categories.add(category);
         categoryRepository.save(category);
 
