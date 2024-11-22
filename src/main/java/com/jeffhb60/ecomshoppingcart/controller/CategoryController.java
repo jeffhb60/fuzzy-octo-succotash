@@ -1,5 +1,6 @@
 package com.jeffhb60.ecomshoppingcart.controller;
 
+import com.jeffhb60.ecomshoppingcart.dto.CategoryResponse;
 import com.jeffhb60.ecomshoppingcart.model.Category;
 import com.jeffhb60.ecomshoppingcart.service.CategoryService;
 import jakarta.validation.Valid;
@@ -20,9 +21,9 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("public/categories")
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categories = categoryService.getAllCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    public ResponseEntity<CategoryResponse> getAllCategories() {
+        CategoryResponse categoryResponse = categoryService.getAllCategories();
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
     @PostMapping("public/categories")

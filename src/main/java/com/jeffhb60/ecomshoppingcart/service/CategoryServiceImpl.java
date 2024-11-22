@@ -1,10 +1,13 @@
 package com.jeffhb60.ecomshoppingcart.service;
 
+import com.jeffhb60.ecomshoppingcart.dto.CategoryDTO;
+import com.jeffhb60.ecomshoppingcart.dto.CategoryResponse;
 import com.jeffhb60.ecomshoppingcart.exceptions.APIException;
 import com.jeffhb60.ecomshoppingcart.exceptions.ResourceNotFoundException;
 import com.jeffhb60.ecomshoppingcart.model.Category;
 import com.jeffhb60.ecomshoppingcart.repositories.CategoryRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,13 +26,22 @@ public class CategoryServiceImpl implements CategoryService{
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public List<Category> getAllCategories() {
+    public CategoryResponse getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             throw new APIException("There are no categories available in the database!");
         }
-        return categories;
+
+        List<CategoryDTO> categoryDTOS = categories.stream()
+                .map(category -> modelMapper.map(category, CategoryDTO.class))
+                .toList();
+        CategoryResponse categoryResponse = new CategoryResponse();
+        categoryResponse.setContent(categoryDTOS);
+        return categoryResponse;
     }
 
     @Override
