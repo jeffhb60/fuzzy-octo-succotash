@@ -2,6 +2,7 @@ package com.jeffhb60.ecomshoppingcart.controller;
 
 import com.jeffhb60.ecomshoppingcart.model.Category;
 import com.jeffhb60.ecomshoppingcart.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class CategoryController {
     }
 
     @PostMapping("public/categories")
-    public ResponseEntity<String> createCategory(@RequestBody Category category) {
+    public ResponseEntity<String> createCategory(@Valid @RequestBody Category category) {
         categoryService.createCategory(category);
         return new ResponseEntity<>("Category added successfully", HttpStatus.OK);
     }
