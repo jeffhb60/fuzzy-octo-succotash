@@ -1,6 +1,8 @@
 package com.jeffhb60.ecomshoppingcart.controller;
 
 import com.jeffhb60.ecomshoppingcart.model.Category;
+import com.jeffhb60.ecomshoppingcart.service.CategoryService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,17 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class CategoryController {
-    private final List<Category> categories = new ArrayList<>();
+
+    private CategoryService categoryService;
 
     @GetMapping("api/public/categories")
     public List<Category> getAllCategories() {
-        return categories;
+        return categoryService.getAllCategories();
     }
 
     @PostMapping("api/public/categories")
     public String createCategory(@RequestBody Category category) {
-        categories.add(category);
+        categoryService.createCategory(category);
         return "Category added successfully";
     }
 
