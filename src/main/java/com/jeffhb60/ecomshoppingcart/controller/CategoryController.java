@@ -2,6 +2,8 @@ package com.jeffhb60.ecomshoppingcart.controller;
 
 import com.jeffhb60.ecomshoppingcart.model.Category;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -14,6 +16,12 @@ public class CategoryController {
     @GetMapping("api/public/categories")
     public List<Category> getAllCategories() {
         return categories;
+    }
+
+    @PostMapping("api/public/categories")
+    public String createCategory(@RequestBody Category category) {
+        categories.add(category);
+        return "Category added successfully";
     }
 
 }
