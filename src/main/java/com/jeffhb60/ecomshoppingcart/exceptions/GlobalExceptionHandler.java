@@ -1,5 +1,6 @@
 package com.jeffhb60.ecomshoppingcart.exceptions;
 
+import com.jeffhb60.ecomshoppingcart.response.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -23,11 +24,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> resourceNotFoundException(Exception ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<APIResponse> resourceNotFoundException(Exception ex) {
+        String message = ex.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(APIException.class)
-    public ResponseEntity<String> apiException(Exception ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<APIResponse> apiException(Exception ex) {
+        String message = ex.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 }
