@@ -9,9 +9,20 @@ import com.jeffhb60.ecomshoppingcart.repositories.CategoryRepository;
 import com.jeffhb60.ecomshoppingcart.repositories.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -24,6 +35,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private FileService fileService;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @Override
     public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
@@ -111,6 +128,20 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(product);
         return modelMapper.map(product, ProductDTO.class);
     }
+
+    @Override
+    public ProductDTO updateProductImage(Long productId, MultipartFile image) throws IOException {
+        Product dbProduct = productRepository.findById(productId)
+                .orElseThrow(()->new ResourceNotFoundException("Product", "productId",productId));
+
+
+        String filename = fileService.uploadImage(uploadDir, image);
+        dbProduct.setImage(filename);
+        Product udpatedProduct = productRepository.save(dbProduct);
+        return modelMapper.map(udpatedProduct, ProductDTO.class);
+    }
+
+
 
 
 }
