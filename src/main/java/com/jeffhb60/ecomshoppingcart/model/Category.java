@@ -24,11 +24,11 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "category_id")
     private Long categoryId;
 
     @NotBlank
     @Size(min = 1, message = "Category must contain at least 1 characters")
-    @Column(name = "name")
+    @Column(name = "category_name")
     private String categoryName;
 }
